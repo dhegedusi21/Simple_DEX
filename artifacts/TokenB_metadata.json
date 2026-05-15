@@ -8,13 +8,8 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "recipient",
-						"type": "address"
-					},
-					{
 						"internalType": "uint256",
-						"name": "initialSupply",
+						"name": "_initialSupply",
 						"type": "uint256"
 					}
 				],
@@ -75,12 +70,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -99,12 +94,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "_spender",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
@@ -123,7 +118,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "account",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -149,24 +144,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "mint",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -212,12 +189,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "_to",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
@@ -236,17 +213,17 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "_from",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "to",
+						"name": "_to",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "_amount",
 						"type": "uint256"
 					}
 				],
@@ -289,20 +266,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/IERC20.sol": {
-			"keccak256": "0x9d3442d685d4d1e2e8be3a8c3b455316ce96342fbc5d3bbc824756bd1051f257",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://22620db92ea471c9a2681b6f19d58a05aac45a42f608fa1c1ace49e826c60948",
-				"dweb:/ipfs/QmbdioQtmwpv9uYzyFzG3y4ZdoCHPQtPPKRUj9LGWepdYg"
-			]
-		},
 		"contracts/TokenB.sol": {
-			"keccak256": "0x8ec358c4c93b963c7bdd68e7c5f2c2d1f2247d13f48b907189d9d3de2bb013b8",
+			"keccak256": "0x3d58b4a310c92c973c3a94914447f86d14a0d0577eb7f93e8f30103b880c1560",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b2fdf72688465fb8a519a97fc851a65dcbc325abdfb8038056a2b99cb62cb36e",
-				"dweb:/ipfs/QmPdn6xzTufpzMisY2NDcBdCQR4J8HNLYnpPXkevCxxUtP"
+				"bzz-raw://7185db3a6c01eaed3c146dc9da9cc6d3dd5fa4842cde72bbb89031dc3b3c83d1",
+				"dweb:/ipfs/Qme6VX6xbwf4BrNAZJcECjmkehjWLj9XaiPkhypWLssLu3"
 			]
 		}
 	},

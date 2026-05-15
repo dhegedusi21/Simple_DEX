@@ -22,19 +22,39 @@
 				"type": "constructor"
 			},
 			{
+				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "korisnik",
+						"type": "address"
+					},
+					{
+						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountA",
+						"name": "iznosA",
 						"type": "uint256"
 					},
 					{
+						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountB",
+						"name": "iznosB",
 						"type": "uint256"
 					}
 				],
-				"name": "addLiquidity",
+				"name": "Swap",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_iznos",
+						"type": "uint256"
+					}
+				],
+				"name": "depositTokenA",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -43,16 +63,68 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "amountA",
+						"name": "_iznos",
+						"type": "uint256"
+					}
+				],
+				"name": "depositTokenB",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rate",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stanjeDEX",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "stanjeA",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "amountB",
+						"name": "stanjeB",
 						"type": "uint256"
 					}
 				],
-				"name": "removeLiquidity",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_iznosA",
+						"type": "uint256"
+					}
+				],
+				"name": "swapAzaB",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -61,47 +133,12 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "amountA",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "minAmountB",
+						"name": "_iznosB",
 						"type": "uint256"
 					}
 				],
-				"name": "swapTokenAForTokenB",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amountB",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "minAmountA",
-						"type": "uint256"
-					}
-				],
-				"name": "swapTokenBForTokenA",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
+				"name": "swapBzaA",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -110,7 +147,7 @@
 				"name": "tokenA",
 				"outputs": [
 					{
-						"internalType": "contract IERC20",
+						"internalType": "contract TokenA",
 						"name": "",
 						"type": "address"
 					}
@@ -123,7 +160,7 @@
 				"name": "tokenB",
 				"outputs": [
 					{
-						"internalType": "contract IERC20",
+						"internalType": "contract TokenB",
 						"name": "",
 						"type": "address"
 					}
@@ -159,20 +196,28 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/IERC20.sol": {
-			"keccak256": "0x9d3442d685d4d1e2e8be3a8c3b455316ce96342fbc5d3bbc824756bd1051f257",
+		"contracts/SimpleDEX.sol": {
+			"keccak256": "0x4624e72d39eb0e92660787fbb7a3b59da615fa9fa56f9a4c88a667b518a7e3d0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://22620db92ea471c9a2681b6f19d58a05aac45a42f608fa1c1ace49e826c60948",
-				"dweb:/ipfs/QmbdioQtmwpv9uYzyFzG3y4ZdoCHPQtPPKRUj9LGWepdYg"
+				"bzz-raw://3f0ae0c2aaadfa6a96279cb35ec8b37184084c90e36e65a42de82ad5a932dffb",
+				"dweb:/ipfs/QmWgvuCr1EFagK9qAowtZ4SCRzsik8j8Cc1WCQQtEjrb94"
 			]
 		},
-		"contracts/SimpleDEX.sol": {
-			"keccak256": "0xbe979d9657a20301cfabe38b82a1afd14a3068d3cd879f5baa1340f2104cda34",
+		"contracts/TokenA.sol": {
+			"keccak256": "0x7eb8a7f813e3fd4a1995ec73b666b5a0de24f0d74e29382697c515d8251d6305",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ef436c3dde054d7f0c1bcc0766b69ba5fe91558c0ec0f631306617e4d446bb25",
-				"dweb:/ipfs/QmcZGzFFVsRG3JJKUS5HdTEbFBoEsxyHewPnArVMfakAXz"
+				"bzz-raw://45bd63f238763b4bc1b5a167276249a5bfbfdcb1b536fbd5f8bf35c10ce49e8b",
+				"dweb:/ipfs/QmWLLBcvaC52VKPLNpLKmB3Pm2KizFb2wfsQxo51Yi1YUA"
+			]
+		},
+		"contracts/TokenB.sol": {
+			"keccak256": "0x3d58b4a310c92c973c3a94914447f86d14a0d0577eb7f93e8f30103b880c1560",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7185db3a6c01eaed3c146dc9da9cc6d3dd5fa4842cde72bbb89031dc3b3c83d1",
+				"dweb:/ipfs/Qme6VX6xbwf4BrNAZJcECjmkehjWLj9XaiPkhypWLssLu3"
 			]
 		}
 	},

@@ -1,52 +1,69 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.27;
+pragma solidity ^0.8.0;
 
-import {IERC20} from "./IERC20.sol";
+import "./TokenA.sol";
+import "./TokenB.sol";
 
 contract SimpleDEX {
-    IERC20 public tokenA;
-    IERC20 public tokenB;
+    address public owner;
+    TokenA public tokenA;
+    TokenB public tokenB;
+
+    // Fiksni tečaj: 1 TKA = 2 TKB
+    uint256 public rate = 2;
+
+    event Swap(address indexed korisnik, uint256 iznosA, uint256 iznosB);
 
     constructor(address _tokenA, address _tokenB) {
-        tokenA = IERC20(_tokenA);
-        tokenB = IERC20(_tokenB);
+        owner = msg.sender;
+        tokenA = TokenA(_tokenA);
+        tokenB = TokenB(_tokenB);
     }
 
-    function swapTokenAForTokenB(
-        uint256 amountA,
-        uint256 minAmountB
-    ) external returns (uint256) {
-        require(tokenA.transferFrom(msg.sender, address(this), amountA), "Transfer failed");
-        uint256 amountB = amountA; // 1:1 ratio for simplicity
-        require(amountB >= minAmountB, "Insufficient amountB");
-        require(tokenB.transfer(msg.sender, amountB), "Transfer failed");
-        return amountB;
+    // Korisnik šalje TKA, dobiva TKB
+    function swapAzaB(uint256 _iznosA) public {
+        require(_iznosA > 0, "Iznos mora biti veci od 0");
+
+        uint256 iznosB = _iznosA * rate;
+
+        require(tokenB.balanceOf(address(this)) >= iznosB, "DEX nema dovoljno TKB");
+
+        tokenA.transferFrom(msg.sender, address(this), _iznosA);
+        tokenB.transfer(msg.sender, iznosB);
+
+        emit Swap(msg.sender, _iznosA, iznosB);
     }
 
-    function swapTokenBForTokenA(
-        uint256 amountB,
-        uint256 minAmountA
-    ) external returns (uint256) {
-        require(tokenB.transferFrom(msg.sender, address(this), amountB), "Transfer failed");
-        uint256 amountA = amountB; // 1:1 ratio for simplicity
-        require(amountA >= minAmountA, "Insufficient amountA");
-        require(tokenA.transfer(msg.sender, amountA), "Transfer failed");
-        return amountA;
+    // Korisnik šalje TKB, dobiva TKA
+    function swapBzaA(uint256 _iznosB) public {
+        require(_iznosB > 0, "Iznos mora biti veci od 0");
+
+        uint256 iznosA = _iznosB / rate;
+
+        require(iznosA > 0, "Iznos zamjene je prenizak - posalji najmanje 2 TKB");
+        require(tokenA.balanceOf(address(this)) >= iznosA, "DEX nema dovoljno TKA");
+
+        tokenB.transferFrom(msg.sender, address(this), _iznosB);
+        tokenA.transfer(msg.sender, iznosA);
+
+        emit Swap(msg.sender, _iznosB, iznosA);
     }
 
-    function addLiquidity(
-        uint256 amountA,
-        uint256 amountB
-    ) external {
-        require(tokenA.transferFrom(msg.sender, address(this), amountA), "Transfer failed");
-        require(tokenB.transferFrom(msg.sender, address(this), amountB), "Transfer failed");
+    // Vlasnik puni DEX s TokenB likvidnošću
+    function depositTokenB(uint256 _iznos) public {
+        require(msg.sender == owner, "Samo vlasnik moze puniti DEX");
+        tokenB.transferFrom(msg.sender, address(this), _iznos);
     }
 
-    function removeLiquidity(
-        uint256 amountA,
-        uint256 amountB
-    ) external {
-        require(tokenA.transfer(msg.sender, amountA), "Transfer failed");
-        require(tokenB.transfer(msg.sender, amountB), "Transfer failed");
+    // Vlasnik puni DEX s TokenA likvidnošću
+    function depositTokenA(uint256 _iznos) public {
+        require(msg.sender == owner, "Samo vlasnik moze puniti DEX");
+        tokenA.transferFrom(msg.sender, address(this), _iznos);
+    }
+
+    // Provjera stanja tokena u DEX-u
+    function stanjeDEX() public view returns (uint256 stanjeA, uint256 stanjeB) {
+        stanjeA = tokenA.balanceOf(address(this));
+        stanjeB = tokenB.balanceOf(address(this));
     }
 }
