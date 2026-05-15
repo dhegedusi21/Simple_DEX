@@ -40,7 +40,7 @@ contract SimpleDEX {
 
         uint256 iznosA = _iznosB / rate;
 
-        require(iznosA > 0, "Iznos zamjene je prenizak - posalji najmanje 2 TKB");
+        require(iznosA > 1, "Iznos zamjene je prenizak - posalji najmanje 2 TKB");
         require(tokenA.balanceOf(address(this)) >= iznosA, "DEX nema dovoljno TKA");
 
         tokenB.transferFrom(msg.sender, address(this), _iznosB);

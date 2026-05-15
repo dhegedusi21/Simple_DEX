@@ -27,7 +27,38 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "korisnik",
+						"name": "pruzatelj",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "iznosA",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "iznosB",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lpUdio",
+						"type": "uint256"
+					}
+				],
+				"name": "LikvidnostDodana",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "pruzatelj",
 						"type": "address"
 					},
 					{
@@ -43,6 +74,37 @@
 						"type": "uint256"
 					}
 				],
+				"name": "LikvidnostPovucena",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "korisnik",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "smjer",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "iznosUlaz",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "iznosIzlaz",
+						"type": "uint256"
+					}
+				],
 				"name": "Swap",
 				"type": "event"
 			},
@@ -50,11 +112,16 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_iznos",
+						"name": "_iznosA",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_iznosB",
 						"type": "uint256"
 					}
 				],
-				"name": "depositTokenA",
+				"name": "dodajLikvidnost",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -63,13 +130,61 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_iznos",
+						"name": "_iznosUlaz",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_rezervaUlaz",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_rezervaIzlaz",
 						"type": "uint256"
 					}
 				],
-				"name": "depositTokenB",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"name": "izracunajCijenu",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "lpUdio",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "mojLPUdio",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -86,8 +201,21 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_lpIznos",
+						"type": "uint256"
+					}
+				],
+				"name": "povuciLikvidnost",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "rate",
+				"name": "rezervaA",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -100,16 +228,29 @@
 			},
 			{
 				"inputs": [],
-				"name": "stanjeDEX",
+				"name": "rezervaB",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "stanjeA",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stanjeRezervacija",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "stanjeB",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -125,7 +266,13 @@
 					}
 				],
 				"name": "swapAzaB",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -138,7 +285,13 @@
 					}
 				],
 				"name": "swapBzaA",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -167,6 +320,19 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ukupniLPUdio",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -182,7 +348,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/SimpleDEX.sol": "SimpleDEX"
+			"contracts/ComplicatedDEX.sol": "AmmDEX"
 		},
 		"evmVersion": "osaka",
 		"libraries": {},
@@ -196,12 +362,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/SimpleDEX.sol": {
-			"keccak256": "0x2d380450abe960247867788a454b5aaaa78184be272a2ecaf0d4eed1b0ee41eb",
+		"contracts/ComplicatedDEX.sol": {
+			"keccak256": "0xb2b7b94a9ec5d8d12af5661e013e568d2c67f9785d9a85136d0ec34cc529f134",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://560c65d75f62efcf2393cca7ba7b355aa7d8414ce7c5788001bcd097cc20c20c",
-				"dweb:/ipfs/Qmd2K7HvPPgoSouy8sc2Vi6ACYP1dD35g3r5PfZGXobVVN"
+				"bzz-raw://5828580b69646e55daa664d9fe2577d6fae2e39b27476102383a843b7fe8a550",
+				"dweb:/ipfs/QmbHJGi6V7tCoA4i3bPPRSpvXQfR7vpc9vmHJ3mw3mwiar"
 			]
 		},
 		"contracts/TokenA.sol": {
