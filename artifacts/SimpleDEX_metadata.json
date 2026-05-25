@@ -197,11 +197,11 @@
 	},
 	"sources": {
 		"contracts/SimpleDEX.sol": {
-			"keccak256": "0x2d380450abe960247867788a454b5aaaa78184be272a2ecaf0d4eed1b0ee41eb",
+			"keccak256": "0x63f861bade8450c984581d71371705dffcef3da506ec0598596c8c730d6992a2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://560c65d75f62efcf2393cca7ba7b355aa7d8414ce7c5788001bcd097cc20c20c",
-				"dweb:/ipfs/Qmd2K7HvPPgoSouy8sc2Vi6ACYP1dD35g3r5PfZGXobVVN"
+				"bzz-raw://60b06e0110398141de877b959afb7469031d2f053f4ef9bc0723d3027a3d33a5",
+				"dweb:/ipfs/QmUzZCaM6DxweB1UVPs7pqnQJL4VjXkoLbBPBogwo368Go"
 			]
 		},
 		"contracts/TokenA.sol": {
