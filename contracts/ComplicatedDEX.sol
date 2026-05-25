@@ -25,7 +25,6 @@ contract AmmDEX {
         tokenB = TokenB(_tokenB);
     }
 
-    // Dodavanje likvidnosti u bazen
     function dodajLikvidnost(uint256 _iznosA, uint256 _iznosB) public {
         require(_iznosA > 0 && _iznosB > 0, "Iznosi moraju biti veci od 0");
 
@@ -34,10 +33,8 @@ contract AmmDEX {
 
         uint256 noviLP;
         if (ukupniLPUdio == 0) {
-            // Prvi pružatelj likvidnosti
             noviLP = _iznosA + _iznosB;
         } else {
-            // Proporcionalni udio u odnosu na postojeći pool
             noviLP = (_iznosA * ukupniLPUdio) / rezervaA;
         }
 
@@ -49,7 +46,6 @@ contract AmmDEX {
         emit LikvidnostDodana(msg.sender, _iznosA, _iznosB, noviLP);
     }
 
-    // Povlačenje likvidnosti iz bazena
     function povuciLikvidnost(uint256 _lpIznos) public {
         require(_lpIznos > 0, "Iznos mora biti veci od 0");
         require(lpUdio[msg.sender] >= _lpIznos, "Nedovoljno LP udjela");
@@ -70,12 +66,10 @@ contract AmmDEX {
         emit LikvidnostPovucena(msg.sender, iznosA, iznosB);
     }
 
-    // Swap: TKA -> TKB
     function swapAzaB(uint256 _iznosA) public returns (uint256) {
         require(_iznosA > 0, "Iznos mora biti veci od 0");
         require(rezervaA > 0 && rezervaB > 0, "Bazen je prazan");
 
-        // x * y = k formula s 0.3% naknadom
         uint256 iznosANakonNaknade = _iznosA * 997;
         uint256 iznosB = (rezervaB * iznosANakonNaknade) / (rezervaA * 1000 + iznosANakonNaknade);
 
@@ -92,12 +86,10 @@ contract AmmDEX {
         return iznosB;
     }
 
-    // Swap: TKB -> TKA
     function swapBzaA(uint256 _iznosB) public returns (uint256) {
         require(_iznosB > 0, "Iznos mora biti veci od 0");
         require(rezervaA > 0 && rezervaB > 0, "Bazen je prazan");
 
-        // x * y = k formula s 0.3% naknadom
         uint256 iznosBNakonNaknade = _iznosB * 997;
         uint256 iznosA = (rezervaA * iznosBNakonNaknade) / (rezervaB * 1000 + iznosBNakonNaknade);
 
@@ -114,7 +106,6 @@ contract AmmDEX {
         return iznosA;
     }
 
-    // Izračun očekivanog iznosa PRIJE swapa
     function izracunajCijenu(uint256 _iznosUlaz, uint256 _rezervaUlaz, uint256 _rezervaIzlaz)
         public pure returns (uint256)
     {
@@ -125,12 +116,10 @@ contract AmmDEX {
         return (_rezervaIzlaz * ulazNakonNaknade) / (_rezervaUlaz * 1000 + ulazNakonNaknade);
     }
 
-    // Prikaz trenutnog stanja rezervi
     function stanjeRezervacija() public view returns (uint256, uint256) {
         return (rezervaA, rezervaB);
     }
 
-    // Prikaz LP udjela pozivatelja
     function mojLPUdio() public view returns (uint256) {
         return lpUdio[msg.sender];
     }
